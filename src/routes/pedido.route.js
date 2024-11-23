@@ -8,7 +8,7 @@ route.get("/",pedidoController.get);
 //rota de get de um pedido em específico
 route.get("/:id", pedidoController.getById);
 //rota de post de um pedido no banco
-route.post("/addpedido",pedidoController.add);
+route.post("/add-pedido",pedidoController.add);
 
 
 module.exports = route;

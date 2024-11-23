@@ -10,7 +10,7 @@ route.get("/:id", produtoController.getById);
 
 route.get("/byCat/:catId", produtoController.getByCatId);
 //rota de post de um produto no banco
-route.post("/addProduto",produtoController.add);
+route.post("/add-produto",produtoController.add);
 
 
 module.exports = route;

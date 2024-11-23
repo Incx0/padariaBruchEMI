@@ -6,7 +6,7 @@ const saveService = (message) => {
     //retorna o objeto (message no caso) assincrono que pode ainda não estar finalizado quando retornar(usando O new Promisse)
     return new Promise(async (resolve, reject) => {
         //espera a resposta do "addproduto"
-        await dbMysql.addproduto(message, (err) => {
+        await dbMysql.addProduto(message, (err) => {
             //se o tipo da "message err" for "error" envia o erro
             if (err.hasOwnProperty('error')) {
                 //o reject rejeita o Promisse(é como se tivesse dado um erro) e envia outra coisa, no caso um objeto "Error"
@@ -39,7 +39,7 @@ const getService = () => {
 const getByIdService = (id)=>{
     //retorna o objeto (o json do produto) assincrono que pode ainda não estar finalizado quando retornar(usando O new Promisse)
     return new Promise(async (resolve, reject)=>{
-        dbMysql.getProdutosById(id, (produto)=>{
+        dbMysql.getProdutoById(id, (produto)=>{
             if(!produto){
                 reject(new Error({Error:"Can't take the produto"}));// Rejeita(deu merda) a promessa em caso de erro
             }

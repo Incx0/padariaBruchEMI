@@ -8,7 +8,7 @@ route.get("/",categoriaController.get);
 //rota de get de um categoria em específico
 route.get("/:id", categoriaController.getById);
 //rota de post de um categoria no banco
-route.post("/addcategoria",categoriaController.add);
+route.post("/add-categoria",categoriaController.add);
 
 
 module.exports = route;
