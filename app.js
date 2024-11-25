@@ -26,7 +26,9 @@ dbMysql.connect();
 app.use(express.json());
 
 app.use(cors({
-    origin: '*'
+    origin: '*',
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 //declarando a rota do router do user
