@@ -51,7 +51,7 @@ const add = async (req, res) => {
 
 const login = async (req, res) => {
   try {
-    const msg = await userService.getAndCompareColaboradorLogin(req.body);  // Agora é uma Promise
+    const msg = await userService.getAndCompareLogin(req.body);  // Agora é uma Promise
     res.status(200).json({ message: "Logged" });
   } catch (error) {
     res.status(400).json({ message: error.error || "isntLogged" });
