@@ -55,4 +55,10 @@ const login = async (req, res) => {
       .catch((error) => res.status(400).json({ error: error.message }));
 };
 
-module.exports = {get, add, getById, login}
+const loginColaborador = async (req, res) => {
+    return userService.getAndCompareLoginColaborador(req.body)
+      .then((msg) => res.status(200).json({ message: "Logged" }))
+      .catch((error) => res.status(400).json({ error: error.message }));
+};
+
+module.exports = {get, add, getById, login, loginColaborador}
