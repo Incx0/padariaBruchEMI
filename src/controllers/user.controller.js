@@ -1,4 +1,4 @@
-s//requirindo o userService e suas funções
+//requirindo o userService e suas funções
 const userService = require('../services/user.service');
 
 //função get de todos os usuários
