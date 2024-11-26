@@ -62,4 +62,16 @@ const getAndCompareLogin = (message)=>{
     });
 };
 
-module.exports = { saveService , getService, getByIdService, getAndCompareLogin}
+const getAndCompareColaboradorLogin = (message)=>{
+    return new Promise(async (resolve, reject)=>{
+        dbMysql.loginCompareColaborador(message, (err)=>{
+            if(err.hasOwnProperty('error')){
+                reject(new Error(err.error));
+            }else{
+                resolve(err.message)
+            }
+        });
+    });
+};
+
+module.exports = { saveService , getService, getByIdService, getAndCompareLogin, getAndCompareColaboradorLogin}
