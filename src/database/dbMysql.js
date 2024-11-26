@@ -90,40 +90,40 @@ const addColaborador = async (colaborador, callback) => {
 };
 
 // Função para login de colaborador
-const loginCompare = async (colaborador, callback) => {
-  let connection = null;  // Initialize the connection variable
-  let { username, password } = colaborador;  // Destructure the input
+const loginCompare = async (colaborador) => {
+  let connection = null;
+  let { username, password } = colaborador;
 
   // Check if mandatory fields are provided
   if (!username || !password) {
-    return callback({ error: 'Insira os campos corretamente' });  // Return error if fields are missing
+    return Promise.reject({ error: 'Insira os campos corretamente' });
   }
 
   // SQL query to find the user by username
   let sql = 'SELECT username, password FROM admins WHERE username = ?';
 
   try {
-    connection = await connect();  // Await connection establishment
-    const [results] = await connection.query(sql, [username]);  // Execute the query with the username
+    connection = await connect();
+    const [results] = await connection.query(sql, [username]);
 
     if (results.length == 0) {
-      return callback({ error: 'isntLogged' });  // Return error if user is not found
+      return Promise.reject({ error: 'isntLogged' });
     }
 
-    const colaboradorData = results[0];  // Get the user data
-    const passwordIsValid = await bcrypt.compare(password, colaboradorData.password);  // Compare passwords
+    const colaboradorData = results[0];
+    const passwordIsValid = await bcrypt.compare(password, colaboradorData.password);
 
     if (passwordIsValid) {
-      return callback({ message: 'Login bem-sucedido' });  // Successful login
+      return { message: 'Login bem-sucedido' };
     } else {
-      return callback({ error: 'isntLogged' });  // Incorrect password
+      return Promise.reject({ error: 'isntLogged' });
     }
   } catch (error) {
     console.error(error);
-    callback({ error: 'Erro no login' });  // Handle any other errors
+    return Promise.reject({ error: 'Erro no login' });
   } finally {
     if (connection) {
-      connection.end();  // Close the connection after the operation
+      connection.end();
     }
   }
 };
