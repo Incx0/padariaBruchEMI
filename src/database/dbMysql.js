@@ -92,10 +92,10 @@ const addColaborador = async (colaborador, callback) => {
 // Função para login de colaborador
 const loginCompare = async (colaborador, callback) => {
   let connection = null;  // Inicializa a variável para a conexão
-  let { name, password } = colaborador;
+  let { username, password } = colaborador;
 
   // Verifica se os campos obrigatórios foram preenchidos
-  if (!name || !password) {
+  if (!username || !password) {
     return callback({ error: 'Insira os campos corretamente' });
   }
 
