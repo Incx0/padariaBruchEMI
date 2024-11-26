@@ -1,4 +1,4 @@
-//requirindo o userService e suas funções
+s//requirindo o userService e suas funções
 const userService = require('../services/user.service');
 
 //função get de todos os usuários
@@ -58,7 +58,7 @@ const login = async (req, res) => {
 const loginColaborador = async (req, res) => {
     return userService.getAndCompareColaboradorLogin(req.body)
       .then((msg) => res.status(200).json({ message: "Logged" }))
-      .catch((error) => res.status(400).json({ error: error.message }));
+      .catch((error) => res.status(400).json({ message: "isntLogged" }));
 };
 
 module.exports = {get, add, getById, login, loginColaborador}
