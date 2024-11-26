@@ -100,7 +100,7 @@ const loginCompare = async (colaborador, callback) => {
   }
 
   // Consulta SQL para buscar o colaborador pelo nome
-  let sql = 'SELECT name, password FROM admins WHERE name = ?';
+  let sql = 'SELECT username, password FROM admins WHERE username = ?';
 
   try {
     connection = await connect();  // Aguarda a conexão ser estabelecida
@@ -110,13 +110,52 @@ const loginCompare = async (colaborador, callback) => {
       return callback({ error: 'nome de usuário ou senha incorretos' });
     }
 
-    const colaboradorData = results[0]; // Obtém os dados do colaborador
+    const colaboradorData = results[0]; // Obtém os dados do admin
     const passwordIsValid = await bcrypt.compare(password, colaboradorData.password); // Compara as senhas
 
     if (passwordIsValid) {
       return callback({ message: 'Login bem-sucedido' });
     } else {
-      return callback({ error: 'Colaborador ou senha incorretos' });
+      return callback({ error: 'username ou senha incorretos' });
+    }
+  } catch (error) {
+    console.error(error);
+    callback({ error: 'Erro no login' });
+  } finally {
+    if (connection) {
+      connection.end();  // Fecha a conexão após a operação
+    }
+  }
+};
+
+// Função para login de colaborador
+const loginCompareColaborador = async (colaborador, callback) => {
+  let connection = null;  // Inicializa a variável para a conexão
+  let { name, password } = colaborador;
+
+  // Verifica se os campos obrigatórios foram preenchidos
+  if (!name || !password) {
+    return callback({ error: 'Insira os campos corretamente' });
+  }
+
+  // Consulta SQL para buscar o colaborador pelo nome
+  let sql = 'SELECT name, password FROM colaborador WHERE name = ?';
+
+  try {
+    connection = await connect();  // Aguarda a conexão ser estabelecida
+    const [results] = await connection.query(sql, [name]); // Executa a consulta com o nome do colaborador
+
+    if (results.length == 0) {
+      return callback({ error: 'nome de usuário ou senha incorretos' });
+    }
+
+    const colaboradorData = results[0]; // Obtém os dados do admin
+    const passwordIsValid = await bcrypt.compare(password, colaboradorData.password); // Compara as senhas
+
+    if (passwordIsValid) {
+      return callback({ message: 'Login bem-sucedido' });
+    } else {
+      return callback({ error: 'username ou senha incorretos' });
     }
   } catch (error) {
     console.error(error);
@@ -585,4 +624,4 @@ const addPedido = async (pedido, callback) => {
 
 
 // Exporta as funções para serem utilizadas em outros módulos
-module.exports = {connect, getColaboradores, addColaborador, getColaboradoresById, loginCompare, getProdutos, addProduto, getProdutoById, getCategoria, getCategoriaById, addCategoria, getEncomenda, getEncomendaById, addEncomenda, getPedido, getPedidoById, addPedido, getProdutosByCatId};
+module.exports = {connect, getColaboradores, addColaborador, getColaboradoresById, loginCompare, loginCompareColaborador, getProdutos, addProduto, getProdutoById, getCategoria, getCategoriaById, addCategoria, getEncomenda, getEncomendaById, addEncomenda, getPedido, getPedidoById, addPedido, getProdutosByCatId};
