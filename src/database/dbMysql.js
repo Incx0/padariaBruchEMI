@@ -107,7 +107,7 @@ const loginCompare = async (colaborador, callback) => {
     const [results] = await connection.query(sql, [username]);  // Execute the query with the username
 
     if (results.length == 0) {
-      return callback({ error: 'Nome de usuário ou senha incorretos' });  // Return error if user is not found
+      return callback({ error: 'isntLogged' });  // Return error if user is not found
     }
 
     const colaboradorData = results[0];  // Get the user data
@@ -116,7 +116,7 @@ const loginCompare = async (colaborador, callback) => {
     if (passwordIsValid) {
       return callback({ message: 'Login bem-sucedido' });  // Successful login
     } else {
-      return callback({ error: 'Nome de usuário ou senha incorretos' });  // Incorrect password
+      return callback({ error: 'isntLogged' });  // Incorrect password
     }
   } catch (error) {
     console.error(error);
