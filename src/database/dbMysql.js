@@ -100,14 +100,14 @@ const loginCompare = async (colaborador, callback) => {
   }
 
   // Consulta SQL para buscar o colaborador pelo nome
-  let sql = 'SELECT name, password FROM admin WHERE name = ?';
+  let sql = 'SELECT name, password FROM admins WHERE name = ?';
 
   try {
     connection = await connect();  // Aguarda a conexão ser estabelecida
     const [results] = await connection.query(sql, [name]); // Executa a consulta com o nome do colaborador
 
     if (results.length == 0) {
-      return callback({ error: 'Colaborador ou senha incorretos' });
+      return callback({ error: 'nome de usuário ou senha incorretos' });
     }
 
     const colaboradorData = results[0]; // Obtém os dados do colaborador
