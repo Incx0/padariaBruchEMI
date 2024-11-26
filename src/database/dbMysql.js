@@ -10,7 +10,7 @@ const connect = async () => {
     user: 'root',
     password: 'SHeEaEyQWpdaIhzSkYGXQidmLGIFSMWx',
     database: 'railway'
-  }).promise();  // Garantindo que você está utilizando o promise() aqui
+  }).promise();  // Garantindo que você está utilizando um promise() aqui
   console.log("MysqlDb connected ('u')!");
   return connection; // Retorna a conexão com Promises
 };
