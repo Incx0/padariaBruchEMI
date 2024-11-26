@@ -129,44 +129,44 @@ const loginCompare = async (colaborador, callback) => {
 };
 
 
-// Função para login de colaborador
 const loginCompareColaborador = async (colaborador, callback) => {
-  let connection = null;  // Inicializa a variável para a conexão
-  let { name, password } = colaborador;
+  let connection = null;  // Initialize connection variable
+  let { name, password } = colaborador;  // Destructure the input
 
-  // Verifica se os campos obrigatórios foram preenchidos
+  // Check if mandatory fields are provided
   if (!name || !password) {
-    return callback({ error: 'Insira os campos corretamente' });
+    return callback({ error: 'Insira os campos corretamente' });  // Return error if fields are missing
   }
 
-  // Consulta SQL para buscar o colaborador pelo nome
+  // SQL query to find the collaborator by name
   let sql = 'SELECT name, password FROM colaborador WHERE name = ?';
 
   try {
-    connection = await connect();  // Aguarda a conexão ser estabelecida
-    const [results] = await connection.query(sql, [name]); // Executa a consulta com o nome do colaborador
+    connection = await connect();  // Await the connection being established
+    const [results] = await connection.query(sql, [name]);  // Execute the query with the collaborator's name
 
-    if (results.length == 0) {
-      return callback({ error: 'nome de usuário ou senha incorretos' });
+    if (results.length === 0) {
+      return callback({ error: 'Nome de usuário ou senha incorretos' });  // Return error if no user is found
     }
 
-    const colaboradorData = results[0]; // Obtém os dados do admin
-    const passwordIsValid = await bcrypt.compare(password, colaboradorData.password); // Compara as senhas
+    const colaboradorData = results[0];  // Get the collaborator's data
+    const passwordIsValid = await bcrypt.compare(password, colaboradorData.password);  // Compare the passwords
 
     if (passwordIsValid) {
-      return callback({ message: 'Login bem-sucedido' });
+      return callback({ message: 'Login bem-sucedido' });  // Successful login
     } else {
-      return callback({ error: 'username ou senha incorretos' });
+      return callback({ error: 'Nome de usuário ou senha incorretos' });  // Incorrect password
     }
   } catch (error) {
-    console.error(error);
-    callback({ error: 'Erro no login' });
+    console.error('Error during login:', error);
+    callback({ error: 'Erro no login' });  // Handle any unexpected errors
   } finally {
     if (connection) {
-      connection.end();  // Fecha a conexão após a operação
+      connection.end();  // Close the connection after the operation
     }
   }
 };
+
 
 
 
