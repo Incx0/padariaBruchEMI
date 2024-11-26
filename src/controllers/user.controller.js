@@ -56,7 +56,7 @@ const login = async (req, res) => {
 };
 
 const loginColaborador = async (req, res) => {
-    return userService.getAndCompareLoginColaborador(req.body)
+    return userService.getAndCompareColaboradorLogin(req.body)
       .then((msg) => res.status(200).json({ message: "Logged" }))
       .catch((error) => res.status(400).json({ error: error.message }));
 };
