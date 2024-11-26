@@ -96,7 +96,7 @@ const loginCompare = async (colaborador, callback) => {
 
   // Check if mandatory fields are provided
   if (!username || !password) {
-    return callback({ error: 'Insira os campos corretamente' });  // Return error if fields are missing
+    return callback({ message: 'Insira os campos corretamente' });  // Return error if fields are missing
   }
 
   // SQL query to find the user by username
@@ -107,7 +107,7 @@ const loginCompare = async (colaborador, callback) => {
     const [results] = await connection.query(sql, [username]);  // Execute the query with the username
 
     if (results.length == 0) {
-      return callback({ error: 'isntLogged' });  // Return error if user is not found
+      return callback({ message: 'isntLogged' });  // Return error if user is not found
     }
 
     const colaboradorData = results[0];  // Get the user data
@@ -116,11 +116,11 @@ const loginCompare = async (colaborador, callback) => {
     if (passwordIsValid) {
       return callback({ message: 'Login bem-sucedido' });  // Successful login
     } else {
-      return callback({ error: 'isntLogged' });  // Incorrect password
+      return callback({ message: 'isntLogged' });  // Incorrect password
     }
   } catch (error) {
     console.error(error);
-    callback({ error: 'Erro no login' });  // Handle any other errors
+    callback({ message: 'Erro no login' });  // Handle any other errors
   } finally {
     if (connection) {
       connection.end();  // Close the connection after the operation
