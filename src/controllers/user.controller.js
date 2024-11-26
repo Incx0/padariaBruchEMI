@@ -49,7 +49,7 @@ const add = async (req, res) => {
     .catch((error)=>res.status(500).json({ error: error.message }));//responde em caso de erro
 };
 
-const loginColaborador = async (req, res) => {
+const login = async (req, res) => {
   try {
     const msg = await userService.getAndCompareColaboradorLogin(req.body);  // Agora é uma Promise
     res.status(200).json({ message: "Logged" });
